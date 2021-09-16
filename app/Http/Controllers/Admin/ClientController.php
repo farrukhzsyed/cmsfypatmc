@@ -11,6 +11,7 @@ use Session;
 use Auth;
 use Crypt;
 use Storage;
+use Hash;
 
 class ClientController extends Controller
 {
@@ -31,7 +32,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::with('projects')->get();
+        $clients = Client::with('projects')->orderBy('created_at', 'DESC')->get();
         return view('admin.view_client',compact('clients'));
     }
 
@@ -121,6 +122,18 @@ class ClientController extends Controller
         return redirect()->route('admin.show.client',$id);
     }
 
+    public function resetPassword($id)
+    {
+        $data['password'] = Hash::make('CMS-Client');
+        Client::find(Crypt::decrypt($id))->update($data);
+        
+        $message['type'] = 'success';
+        $message['content'] = 'Client Password Reset To Default';
+        Session::flash('message',$message);
+
+        return redirect()->route('admin.show.client',$id);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -132,11 +145,11 @@ class ClientController extends Controller
         $client = Client::with('projects')->find(Crypt::decrypt($id));
 
         if(Storage::disk('publicPath')->exists($client->avatar))
-            Storage::delete($client->avatar);
+            Storage::disk('publicPath')->delete($client->avatar);
 
         foreach($client->projects as $project){
             if(Storage::disk('publicDisk')->exists($project->projectFile))
-                Storage::delete($project->projectFile);
+                Storage::disk('publicDisk')->delete($project->projectFile);
         }
         
         $client->delete();

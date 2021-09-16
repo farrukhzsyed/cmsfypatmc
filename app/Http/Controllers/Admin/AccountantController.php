@@ -10,6 +10,7 @@ use Session;
 use Auth;
 use Crypt;
 use Storage;
+use Hash;
 
 class AccountantController extends Controller
 {
@@ -30,7 +31,7 @@ class AccountantController extends Controller
      */
     public function index()
     {
-        $accountants = Accountant::all();
+        $accountants = Accountant::orderBy('created_at', 'DESC')->get();
         return view('admin.view_accountant',compact('accountants'));
     }
 
@@ -118,6 +119,18 @@ class AccountantController extends Controller
         return redirect()->route('admin.show.accountant',$id);
     }
 
+    public function resetPassword($id)
+    {
+        $data['password'] = Hash::make('CMS-Accountant');
+        Accountant::find(Crypt::decrypt($id))->update($data);
+        
+        $message['type'] = 'success';
+        $message['content'] = 'Accountant Password Reset To Default';
+        Session::flash('message',$message);
+
+        return redirect()->route('admin.show.accountant',$id);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -129,7 +142,7 @@ class AccountantController extends Controller
         $accountant = Accountant::find(Crypt::decrypt($id));
 
         if(Storage::disk('publicPath')->exists($accountant->avatar))
-            Storage::delete($accountant->avatar);
+            Storage::disk('publicPath')->delete($accountant->avatar);
         
         $accountant->delete();
 

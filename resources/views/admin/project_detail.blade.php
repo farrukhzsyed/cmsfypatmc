@@ -110,7 +110,7 @@
                     <h6 class="text-uppercase fs-5 ls-2">Project File
                     </h6>
                     @if($project->projectFile)
-                      <p class="mb-0"> <a class="button" href="#">Download File</a></p>
+                      <p class="mb-0"> <a class="button" href="{{route('admin.download.project.file', Crypt::encrypt($project->id))}}">Download File</a></p>
                     @else
                       <p class="mb-0"> Not Available</p>
                     @endif

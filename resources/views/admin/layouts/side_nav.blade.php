@@ -88,28 +88,31 @@
 
                         <!-- Nav item -->
                         <li class="nav-item">
-                            <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navSales" aria-expanded="false" aria-controls="navAuthentication">
+                            <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#sales" aria-expanded="false" aria-controls="navAuthentication">
                                 <i data-feather="dollar-sign" class="nav-icon icon-xs me-2">
                                 </i> Sales
                             </a>
-                            <div id="navSales" class="collapse " data-bs-parent="#sideNavbar">
+                            <div id="sales" class="collapse " data-bs-parent="#sideNavbar">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link " href="{{route('admin.view.invoices')}}"> View All Invoice</a>
+                                        <a class="nav-link " href="{{route('admin.new.invoice')}}">Add New Invoices</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link  " href="{{route('admin.view.payments')}}"> View All Payment</a>
+                                        <a class="nav-link " href="{{route('admin.view.invoices')}}">View All Invoices</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="{{route('admin.view.payments')}}">View All Payments</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
 
-                                         <!-- Nav item -->
+                        <!-- Nav item -->
                         <li class="nav-item">
                             <div class="navbar-heading">Authentication</div>
                         </li>
                             <!-- Authentication Links -->
-                            @if (Auth::guard('admin')->guest())
+                        @if (Auth::guard('admin')->guest())
                             <li class="nav-item">
                                 <a class="nav-link " href="{{ route('admin.login') }}"> Login</a>
                             </li>
@@ -120,8 +123,8 @@
                             @endif
                         @else
                         <li class="nav-item">
-                            <a class="nav-link " href="{{route('admin.password.request')}}">
-                                Forget Password
+                            <a class="nav-link " href="" data-bs-toggle="modal" data-bs-target="#resetPassword">
+                                Reset Password
                             </a>
                         </li>
                         <li class="nav-item">

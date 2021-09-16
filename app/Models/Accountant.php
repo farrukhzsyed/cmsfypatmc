@@ -21,6 +21,23 @@ class Accountant extends Authenticatable
         'fname','username', 'email', 'tel', 'gender', 'avatar', 'password',
     ];
 
+
+    /**
+     * Get all of the post's comments.
+     */
+    public function invoices()
+    {
+        return $this->morphMany(Invoice::class, 'user');
+    }
+
+    /**
+     * Get all of the post's comments.
+     */
+    public function paymentsConfirmed()
+    {
+        return $this->morphMany(Invoice::class, 'confirmed_user');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

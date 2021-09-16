@@ -41,7 +41,7 @@
                   <td class="align-middle">
                     <span class="avatar avatar-sm">
                       <img alt="avatar"
-                        src="{{asset($item->client->avatar)}}"
+                        src="{{$item->client->avatar ? asset($item->client->avatar) : asset('defaultAvatar.png')}}"
                         class="rounded-circle">
                     </span>
                     {{$item->client->username ? $item->client->username : $item->client->fname}}</td>
@@ -69,7 +69,7 @@
                           aria-labelledby="dropdownTeamOne">
                           <a class="dropdown-item" href="{{route('admin.show.project', Crypt::encrypt($item->id))}}">Show Details</a>
                           <a class="dropdown-item" href="{{route('admin.edit.project', Crypt::encrypt($item->id))}}">Edit Details</a>
-                          <a class="dropdown-item" href="{{route('admin.delete.project', Crypt::encrypt($item->id))}}">Delete</a>
+                          <a class="dropdown-item" style="color: red;" href="{{route('admin.delete.project', Crypt::encrypt($item->id))}}">Delete</a>
                         </div>
                       </div>
                     </td>

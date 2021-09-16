@@ -20,7 +20,7 @@
                           <!-- Input -->
                           <div class="mb-3">
                             <label class="form-label" for="textInput">Full Name</label>
-                            <input type="text" id="fname" name="fname" class="form-control @error('fname') is-invalid @enderror" placeholder="Full Name">
+                            <input type="text" id="fname" name="fname" class="form-control @error('fname') is-invalid @enderror" value="{{old('fname')}}" placeholder="Full Name">
                             @error('fname')
                               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -28,8 +28,8 @@
                             @enderror
                           </div>
                           <div class="mb-3">
-                            <label class="form-label" for="textInput">Username</label>
-                            <input type="text" id="username" name="username" class="form-control @error('username') is-invalid @enderror" placeholder="Username">
+                            <label class="form-label" for="textInput">Username (optional)</label>
+                            <input type="text" id="username" name="username" class="form-control @error('username') is-invalid @enderror" value="{{old('username')}}" placeholder="Username">
                             @error('username')
                               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -38,7 +38,7 @@
                           </div>
                           <div class="mb-3">
                             <label class="form-label" for="textInput">Email</label>
-                            <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="name@example.com">
+                            <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}" placeholder="name@example.com">
                             @error('email')
                               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -60,7 +60,7 @@
                           </div>
                           <div class="mb-3">
                             <label class="form-label" for="textInput">Phone Number</label>
-                            <input type="tel" id="tel" name="tel" class="form-control @error('tel') is-invalid @enderror" placeholder="+61 400 000 000">
+                            <input type="number" id="tel" name="tel" class="form-control @error('tel') is-invalid @enderror" value="{{old('tel')}}" placeholder="235 0989373">
                             @error('tel')
                               <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

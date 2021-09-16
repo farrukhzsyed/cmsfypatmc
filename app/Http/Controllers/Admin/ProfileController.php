@@ -8,6 +8,9 @@ use App\Models\Admin;
 use Session;
 use Auth;
 use Illuminate\Support\Facades\Validator;
+use Hash;
+use App\Http\Requests\PasswordRequest;
+
 class ProfileController extends Controller
 {
     /**
@@ -84,5 +87,16 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function resetPassword(PasswordRequest $request)
+    {
+        $data['password'] = Hash::make($request->password);        
+        
+        Admin::find(Auth::guard('admin')->user()->id)->update($data);
 
+        $message['type'] = 'success';
+        $message['content'] = 'Password Changed Successfully';
+        Session::flash('message',$message);
+
+        return redirect()->route('admin.home');
+    }
 }

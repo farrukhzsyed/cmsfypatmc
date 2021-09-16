@@ -41,23 +41,9 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item"
-                href="#">
+              <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#resetPassword">
                 <i class="me-2 icon-xxs dropdown-item-icon"
-                  data-feather="activity"></i>Activity Log
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown-item text-primary" href="#">
-                <i class="me-2 icon-xxs text-primary dropdown-item-icon"
-                  data-feather="star"></i>Go Pro
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <i class="me-2 icon-xxs dropdown-item-icon"
-                  data-feather="settings"></i>Account Settings
+                  data-feather="settings"></i>Reset Password
               </a>
             </li>
               <!-- Authentication Links -->

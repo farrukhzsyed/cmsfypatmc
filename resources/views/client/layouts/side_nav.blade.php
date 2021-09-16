@@ -66,8 +66,8 @@
                             </li>
                         @else
                         <li class="nav-item">
-                            <a class="nav-link " href="{{route('client.password.request')}}">
-                                Forget Password
+                            <a class="nav-link " href="" data-bs-toggle="modal" data-bs-target="#resetPassword">
+                                Reset Password
                             </a>
                         </li>
                         <li class="nav-item">

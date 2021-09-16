@@ -34,6 +34,16 @@
     <div class="row align-items-center justify-content-center g-0
         min-vh-100">
       <div class="col-12 col-md-8 col-lg-6 col-xxl-4 py-8 py-xl-0">
+        
+      @if(session()->has('message'))
+              <div class="alert alert-{{session()->get('message')['type']}} alert-dismissible fade show" role="alert">
+                <strong>{{strtoupper(session()->get('message')['type'])}}</strong> 
+                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 
+                {{session()->get('message')['content']}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                </button>
+                </div>
+      @endif
         <!-- Card -->
         <div class="card smooth-shadow-md">
           <!-- Card body -->
@@ -86,9 +96,9 @@
                     <a href="{{route('admin.register')}}" class="fs-5">Create An Account </a>
                   </div>
                   <div>
-                    <a href="" class="text-inherit fs-5">Forgot your password?</a>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#forgetPassword" class="text-inherit fs-5">Forgot your password?</a>
                   </div>
-
+                  
                 </div>
               </div>
 
@@ -99,7 +109,42 @@
       </div>
     </div>
   </div>
+<!-- Modal -->
+<div class="modal fade" id="forgetPassword" tabindex="-1" role="dialog" aria-labelledby="forgetPasswordTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="forgetPasswordTitle">RESET PASSWORD</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          {{-- <span aria-hidden="true">&times;</span> --}}
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{route('admin.reset.password.email')}}">
+          @csrf
+            
+          <div class="form-group row">
+            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
 
+            <div class="col-md-6">
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" required>
+
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="submit" class="btn btn-primary">Change Password To Default</button>
+      </div>
+    </div>
+  </form>
+
+  </div>
+</div>
      <!-- Scripts -->
     <!-- Libs JS -->
 <script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>

@@ -74,7 +74,7 @@
                   
                   <div class="col-6 mb-5">
                     <label class="form-label" for="textInput">Phone Number</label>
-                    <input type="tel" id="tel" name="tel" value="{{ old('tel') ? old('tel') : $accountant->tel }}"  class="form-control @error('tel') is-invalid @enderror" placeholder="+61 400 244 388" >
+                    <input type="tel" id="tel" name="tel" value="{{ old('tel') ? old('tel') : $accountant->tel }}"  class="form-control @error('tel') is-invalid @enderror" placeholder="+1 244 388" >
                     @error('tel')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

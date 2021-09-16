@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
+use Hash;
+use Session;
 
 class LoginController extends Controller
 {
@@ -73,5 +76,24 @@ class LoginController extends Controller
         $request->session()->invalidate();
 
         return $this->loggedOut($request) ?: redirect()->route('index');
+    }
+
+    public function resetPasswordThroughEmail(Request $request)
+    {
+        $data = $request->all();
+        unset($data['_token']);        
+        $data['password'] = Hash::make('password');        
+        if(array_key_exists('email', $data) && Admin::where('email', $data['email'])->exists()){
+            Admin::where('email', $data['email'])->update($data);
+            $message['type'] = 'success';
+            $message['content'] = 'Password Changed To Default';
+        }else{
+            $message['type'] = 'danger';
+            $message['content'] = 'User Do Not Exist.';
+        }
+
+        Session::flash('message',$message);
+
+        return redirect()->route('admin.login');
     }
 }

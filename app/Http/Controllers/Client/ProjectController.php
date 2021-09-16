@@ -79,4 +79,15 @@ class ProjectController extends Controller
         return redirect()->route('client.show.project',$id);
     }
 
+    public function downloadProjectFile($id) {
+        $project = Project::find(Crypt::decrypt($id));
+        $headers = array(
+            'Content-Type: '.Storage::disk('publicDisk')->mimeType($project->projectFile),
+        );
+        $exe = explode('.', $project->projectFile)[1];
+        return Storage::disk('publicDisk')->download($project->projectFile, 
+                                'payment Evidence For Invoice'.$project->id.'.'.$exe, 
+                                $headers);
+    }
+
 }

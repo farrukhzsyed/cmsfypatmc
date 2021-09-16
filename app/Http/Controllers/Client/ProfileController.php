@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientProfileRequest;
+use App\Http\Requests\PasswordRequest;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use Session;
 use Auth;
+use Hash;
 
 class ProfileController extends Controller
 {
@@ -61,5 +63,17 @@ class ProfileController extends Controller
         Session::flash('message',$message);
 
         return redirect()->route('client.profile');
+    }
+
+    public function resetPassword(PasswordRequest $request)
+    {
+        $data['password'] = Hash::make($request->password);        
+        Client::find(Auth::guard('client')->user()->id)->update($data);
+
+        $message['type'] = 'success';
+        $message['content'] = 'Password Changed Successfully';
+        Session::flash('message',$message);
+
+        return redirect()->route('client.home');
     }
 }

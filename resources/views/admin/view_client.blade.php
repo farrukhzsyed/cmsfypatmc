@@ -60,6 +60,10 @@
                           onclick=" return confirm('Note: \n\nAll Projects Related To This Client Will Be Deleted. \n\nAre you sure you want to delete Client data? \n\nClick OK to proceed.');"
                         ><strong style="color: red"> Delete </strong>
                       </a>
+                      <a class="dropdown-item" href="{{route('admin.reset.client.password',Crypt::encrypt($item->id))}}"
+                        onclick=" return confirm('Note: \n\nThis Client Password Will be Changed to CMS-Client. \n\nClick OK to proceed.');"
+                      ><strong style="color:brown"> Reset Password </strong>
+                    </a>
                     </div>
                   </div>
                 </td>

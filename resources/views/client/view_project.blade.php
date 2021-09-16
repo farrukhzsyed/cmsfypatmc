@@ -68,7 +68,9 @@
                         <div class="dropdown-menu"
                           aria-labelledby="dropdownTeamOne">
                           <a class="dropdown-item" href="{{route('client.show.project', Crypt::encrypt($item->id))}}">Show Details</a>
-                          @if($item->isDelivered)
+                          @if($item->isDelivered && $item->feedback )
+                            <a class="dropdown-item" href="{{route('client.edit.project', Crypt::encrypt($item->id))}}">Edit Feedback</a>
+                          @elseif($item->isDelivered)
                             <a class="dropdown-item" href="{{route('client.edit.project', Crypt::encrypt($item->id))}}">Feedback</a>
                           @endif
                         </div>

@@ -11,118 +11,75 @@
         <div class="card-header bg-white border-bottom-0 py-4">
           <h4 class="mb-0"> All Invoices </h4>
         </div>
-        <!-- table  -->
-        <div class="table-responsive">
-          <table class="table text-nowrap">
+          <!-- table  -->
+        <div class="table-responsive" style="padding: 10px">
+          @if(!count($invoices) > 0)
+            <h4 style="color: brown"> NO INVOICE TO SHOW</h4>
+          @else
+          <table class="table text-nowrap" id="dataTable" name='dataTable'>
             <thead class="table-light">
               <tr>
                 <th>S/N</th>
-                <th>Invoice Number</th>
+                <th>Serial</th>
                 <th>Issued To</th>
-                <th>Issued By</th>
-                <th>Deu Date</th>
+                <th>Related Project</th>
+                {{-- <th>Issued By</th> --}}
+                <th>Due Date</th>
+                <th>Status</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="align-middle">1</td>
-                <td class="align-middle">IN2435</td>
-                <td class="align-middle">Welder Set</td>
-                <td class="align-middle">Accountant 1</td>
-                <td class="align-middle">3 May, 2021</td>
-                  <td class="align-middle">
-                    <div class="dropdown dropstart">
-                      <a class="text-muted text-primary-hover" href="#"
-                        role="button" id="dropdownTeamOne"
-                        data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="icon-xxs" data-feather="more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu"
-                        aria-labelledby="dropdownTeamOne">
-                        <a class="dropdown-item" href="#">Download</a>
-                        <a class="dropdown-item" href="#">Show Details</a>
-                        <a class="dropdown-item" href="#">Edit Details</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                      </div>
-                    </div>
+              @foreach ($invoices as $key => $item)
+                <tr>
+                  <td class="align-middle">{{$key + 1}}</td>
+                  <td class="align-middle">{{$item->invoiceSerial}}</td>
+                  <td class="align-middle">{{Str::limit($item->client->fname, 10,'...' )}}</td>
+                  <td class="align-middle">{{Str::limit($item->project->title, 20,'...' )}}</td>
+                  {{-- <td class="align-middle">{{$item->generatedBy->fname ? '(Acc)-'.Str::limit($item->generatedBy->fname, 7,'...' ) : '(Adm)-'.Str::limit($item->generatedBy->name, 7,'...' )}}</td> --}}
+                  <td class="align-middle">{{Carbon\Carbon::parse($item->dueDate)->diffForHumans()}}</td>
+                  <td class="align-middle" style="color: {{!$item->paymentEvidence ? 'red' : 
+                            ($item->isPayEvidenceApproved && $item->paymentEvidence? 'green' : 'brown') }}">
+                    <strong> 
+                      {{
+                        !$item->paymentEvidence ? 
+                        'UNPAID' : 
+                        ($item->isPayEvidenceApproved && $item->paymentEvidence ? 'Paid & Confirmed' : 'Awaiting Confirmation')
+                      }}
+                    </strong>
                   </td>
-              </tr>
-              <tr>
-                <td class="align-middle">1</td>
-                <td class="align-middle">IN2435</td>
-                <td class="align-middle">Welder Set</td>
-                <td class="align-middle">Accountant 1</td>
-                <td class="align-middle">3 May, 2021</td>
                   <td class="align-middle">
-                    <div class="dropdown dropstart">
-                      <a class="text-muted text-primary-hover" href="#"
-                        role="button" id="dropdownTeamOne"
-                        data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="icon-xxs" data-feather="more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu"
-                        aria-labelledby="dropdownTeamOne">
-                        <a class="dropdown-item" href="#">Download</a>
-                        <a class="dropdown-item" href="#">Show Details</a>
-                        <a class="dropdown-item" href="#">Edit Details</a>
-                        <a class="dropdown-item" href="#">Delete</a>
+                      <div class="dropdown dropstart">
+                        <a class="text-muted text-primary-hover" href="#"
+                          role="button" id="dropdownTeamOne"
+                          data-bs-toggle="dropdown" aria-haspopup="true"
+                          aria-expanded="false">
+                          <i class="icon-xxs" data-feather="more-vertical"></i>
+                        </a>
+                        <div class="dropdown-menu"
+                          aria-labelledby="dropdownTeamOne">
+                          <a class="dropdown-item" href="{{route('admin.download.invoice',Crypt::encrypt($item->id))}}">Download</a>
+                          <a class="dropdown-item" href="{{route('admin.show.invoice',Crypt::encrypt($item->id))}}">Show Details</a>
+                          @if(!($item->isPayEvidenceApproved && $item->paymentEvidence))
+                            @if(!$item->isPayEvidenceApproved && $item->paymentEvidence )
+                              <a class="dropdown-item" href="{{route('admin.confirm.payment.invoice',Crypt::encrypt($item->id))}}">
+                                Confirm Payment
+                              </a>
+                            @else
+                              <a class="dropdown-item" href="{{route('admin.edit.invoice',Crypt::encrypt($item->id))}}">
+                                Edit Details
+                              </a>
+                            @endif
+                          @endif 
+                          <a class="dropdown-item" href="{{route('admin.delete.invoice',Crypt::encrypt($item->id))}}" style="color:red;">Delete</a>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <td class="align-middle">1</td>
-                <td class="align-middle">IN2435</td>
-                <td class="align-middle">Welder Set</td>
-                <td class="align-middle">Accountant 1</td>
-                <td class="align-middle">3 May, 2021</td>
-                  <td class="align-middle">
-                    <div class="dropdown dropstart">
-                      <a class="text-muted text-primary-hover" href="#"
-                        role="button" id="dropdownTeamOne"
-                        data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="icon-xxs" data-feather="more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu"
-                        aria-labelledby="dropdownTeamOne">
-                        <a class="dropdown-item" href="#">Download</a>
-                        <a class="dropdown-item" href="#">Show Details</a>
-                        <a class="dropdown-item" href="#">Edit Details</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                      </div>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-                <td class="align-middle">1</td>
-                <td class="align-middle">IN2435</td>
-                <td class="align-middle">Welder Set</td>
-                <td class="align-middle">Accountant 1</td>
-                <td class="align-middle">3 May, 2021</td>
-                  <td class="align-middle">
-                    <div class="dropdown dropstart">
-                      <a class="text-muted text-primary-hover" href="#"
-                        role="button" id="dropdownTeamOne"
-                        data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="icon-xxs" data-feather="more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu"
-                        aria-labelledby="dropdownTeamOne">
-                        <a class="dropdown-item" href="#">Download</a>
-                        <a class="dropdown-item" href="#">Show Details</a>
-                        <a class="dropdown-item" href="#">Edit Details</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                      </div>
-                    </div>
-                  </td>
-              </tr>
+                    </td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
+          @endif
         </div>
       </div>
     </div>
@@ -130,3 +87,12 @@
 </div>
 </div>
  @endsection     
+
+ @section('bottom_script')
+ <script>
+  $(document).ready(function() {
+    $('#dataTable').DataTable();
+    });
+  </script>
+ @endsection
+

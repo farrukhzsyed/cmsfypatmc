@@ -69,6 +69,9 @@
                             <div id="navSales" class="collapse " data-bs-parent="#sideNavbar">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
+                                        <a class="nav-link " href="{{route('accountant.new.invoice')}}">Add New Invoice</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link " href="{{route('accountant.view.invoices')}}"> View All Invoice</a>
                                     </li>
                                     <li class="nav-item">
@@ -89,8 +92,8 @@
                             </li>
                         @else
                         <li class="nav-item">
-                            <a class="nav-link " href="{{route('accountant.password.request')}}">
-                                Forget Password
+                            <a class="nav-link " href="" data-bs-toggle="modal" data-bs-target="#resetPassword">
+                                Reset Password
                             </a>
                         </li>
                         <li class="nav-item">

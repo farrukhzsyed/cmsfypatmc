@@ -31,7 +31,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Project::with('client')->get();
+        $project = Project::with('client')->orderBy('created_at', 'DESC')->get();
         return view('admin.view_project',compact('project'));
     }
 
@@ -131,7 +131,7 @@ class ProjectController extends Controller
     {
         $project = Project::find(Crypt::decrypt($id));
         
-        Storage::delete($project->projectFile);
+        Storage::disk('publicDisk')->delete($project->projectFile);
         
         $project->delete();
 
@@ -140,6 +140,18 @@ class ProjectController extends Controller
         Session::flash('message',$message);
 
         return redirect()->route('admin.view.all.project');
+    }
+
+    public function downloadProjectFile($id) {
+        $project = Project::find(Crypt::decrypt($id));
+        $headers = array(
+            'Content-Type: '.Storage::disk('publicDisk')->mimeType($project->projectFile),
+        );
+
+        $exe = explode('.', $project->projectFile)[1];
+        return Storage::disk('publicDisk')->download($project->projectFile, 
+                                'payment Evidence For Invoice'.$project->id.'.'.$exe, 
+                                $headers);
     }
 
     function generateRandomString($length = 10) {

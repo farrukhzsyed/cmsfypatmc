@@ -37,9 +37,27 @@
             </div>
           </div>
           <div>
-            <a href="{{route('admin.edit.client', Crypt::encrypt($client->id))}}" class="btn btn-outline-primary
-                d-none d-md-block">Edit Client</a>
-          </div>
+            <div class="dropdown dropstart">
+              <a class="text-muted text-primary-hover" href="#"
+                role="button" id="dropdownTeamOne"
+                data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"> 
+                  <i class="icon-l" data-feather="more-vertical"></i>
+              </a>
+              <div class="dropdown-menu"
+                aria-labelledby="dropdownTeamOne">
+                <a class="dropdown-item" href="{{route('admin.edit.client', Crypt::encrypt($client->id))}}">Edit Client</a>
+                <a class="dropdown-item" href="{{route('admin.delete.client',Crypt::encrypt($client->id))}}"
+                    onclick=" return confirm('Note: \n\nAll Projects Related To This Client Will Be Deleted. \n\nAre you sure you want to delete Client data? \n\nClick OK to proceed.');"
+                  ><strong style="color: red"> Delete </strong>
+                </a>
+                <a class="dropdown-item" href="{{route('admin.reset.client.password',Crypt::encrypt($client->id))}}"
+                  onclick=" return confirm('Note: \n\nThis Client Password Will be Changed to CMS-Client. \n\nClick OK to proceed.');"
+                  ><strong style="color:brown"> Reset Password </strong>
+                </a>
+              </div>
+            </div>
+            </div>
         </div>
       </div>
     </div>

@@ -32,8 +32,11 @@
             </div>
           </div>
           <div>
-            <a href="{{route('client.edit.project', Crypt::encrypt($project->id))}}" class="btn btn-outline-primary
-                d-none d-md-block">Give Feedback</a>
+            @if($project->isDelivered && $project->feedback )
+              <a href="{{route('client.edit.project', Crypt::encrypt($project->id))}}" class="btn btn-outline-primary d-none d-md-block">Edit Feedback</a>
+            @elseif($project->isDelivered)
+              <a href="{{route('client.edit.project', Crypt::encrypt($project->id))}}" class="btn btn-outline-primary d-none d-md-block">Give Feedback</a>
+            @endif
           </div>
         </div>
       </div>
@@ -110,7 +113,7 @@
                     <h6 class="text-uppercase fs-5 ls-2">Project File
                     </h6>
                     @if($project->projectFile)
-                      <p class="mb-0"> <a class="button" href="#">Download File</a></p>
+                      <p class="mb-0"> <a class="button" href="{{route('client.download.project.file', Crypt::encrypt($project->id))}}">Download File</a></p>
                     @else
                       <p class="mb-0"> Not Available</p>
                     @endif

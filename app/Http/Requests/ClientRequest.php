@@ -27,10 +27,10 @@ class ClientRequest extends FormRequest
     {
 
         return [
-            'fname' => 'required|string|max:255',
-            'username' => 'sometimes|string|max:255|unique:clients,id,'.Crypt::decrypt($this->clientId),
-            'email' => 'required|string|email|max:255|unique:clients,id,'.Crypt::decrypt($this->clientId),
-            'tel' => 'sometimes|string|unique:clients,id,'.Crypt::decrypt($this->clientId),
+            'fname' => 'required|string|max:255|alpha_spaces',
+            'username' => 'sometimes|string|max:255|alpha_dash|unique:clients,id,'.Crypt::decrypt($this->clientId),
+            'email' => 'required|string|email|regex:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/|max:255|unique:clients,id,'.Crypt::decrypt($this->clientId),
+            'tel' => 'sometimes|numeric|max:16|unique:clients,id,'.Crypt::decrypt($this->clientId),
             'address' => 'sometimes|string',
             'gender' => 'required|string',
             'avatar' => 'sometimes|mimes:jpeg,jpg,png,gif',

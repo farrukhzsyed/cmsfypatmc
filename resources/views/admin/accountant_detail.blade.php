@@ -36,8 +36,25 @@
             </div>
           </div>
           <div>
-            <a href="{{route('admin.edit.accountant', Crypt::encrypt($accountant->id))}}" class="btn btn-outline-primary
-                d-none d-md-block">Edit Accountant</a>
+            <div class="dropdown dropstart">
+              <a class="text-muted text-primary-hover" href="#"
+                role="button" id="dropdownTeamOne"
+                data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"> 
+                  <i class="icon-l" data-feather="more-vertical"></i>
+              </a>
+              <div class="dropdown-menu"
+                aria-labelledby="dropdownTeamOne">
+                <a class="dropdown-item"href="{{route('admin.edit.accountant', Crypt::encrypt($accountant->id))}}" >Edit Accountant</a>
+                <a class="dropdown-item" href="{{route('admin.delete.accountant',Crypt::encrypt($accountant->id))}}"
+                    onclick=" return confirm('\n\nAre you sure you want to delete Accountant data? \n\nClick OK to proceed.');">
+                    <strong style="color: red"> Delete </strong>
+                </a>
+                <a class="dropdown-item" href="{{route('admin.reset.accountant.password',Crypt::encrypt($accountant->id))}}"
+                  onclick=" return confirm('Note: \n\nThis Accountant Password Will be Changed to CMS-Accountant. \n\nClick OK to proceed.');"
+                ><strong style="color:brown"> Reset Password </strong>
+              </a>
+              </div>
           </div>
         </div>
       </div>

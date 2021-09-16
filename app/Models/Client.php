@@ -30,6 +30,16 @@ class Client extends Authenticatable
         return $this->hasMany(Project::class, 'ownBy');
     }
 
+
+    /**
+     * Get the projects for the blog post.
+     */
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'issuedTo');
+    }
+
+
     /**
      * The attributes that should be hidden for arrays.
      *

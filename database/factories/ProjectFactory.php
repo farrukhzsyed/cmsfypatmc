@@ -32,7 +32,7 @@ class ProjectFactory extends Factory
             'serial' => $this->faker->regexify('[A-Za-z0-9]{5}'),
             'description' => $this->faker->paragraph(3),
             'requirement' => $this->faker->paragraphs(4, true),
-            'projectFile' => \Illuminate\Http\UploadedFile::fake()->create('test.pdf')->store('public/project files'),
+            'projectFile' => \Illuminate\Http\UploadedFile::fake()->create('test.pdf')->store('project files', 'publicDisk'),
             'ownBy' => \App\Models\Client::inRandomOrder()->first()->id,
             'percentageComplete' => $this->faker->biasedNumberBetween(0, 100),
             'startDate' => $this->faker->date(),

@@ -27,4 +27,9 @@ class Project extends Model
         return $this->belongsTo(Client::class, 'ownBy');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'projectId');
+    }
+
 }
